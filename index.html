@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Plano do Dia — Quarta 25/03</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0C0C0C; font-family: 'DM Sans', sans-serif; color: #F0EDE8; min-height: 100vh; padding-bottom: 80px; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .anim { animation: fadeUp 0.5s ease both; opacity: 0; }
+  .wrap { max-width: 580px; margin: 0 auto; padding: 0 20px; }
+  .task-row { transition: background 0.15s; cursor: pointer; border-radius: 10px; display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-top: 0.5px solid #1A1A1A; }
+  .task-row:first-child { border-top: none; }
+  .task-row:hover { background: rgba(255,255,255,0.04); }
+  .check-circle { width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0; margin-top: 1px; border: 1.5px solid #333; background: transparent; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s, transform 0.15s; cursor: pointer; }
+  .check-circle:hover { transform: scale(1.08); }
+  .check-circle.done { border: none; }
+  .check-circle.done svg { display: block; }
+  .check-circle svg { display: none; }
+  .task-text { font-size: 14px; font-weight: 400; color: #D4D0CA; line-height: 1.45; transition: color 0.2s; }
+  .task-text.done { text-decoration: line-through; color: #444; }
+  .task-sub { font-size: 12px; color: #555; margin-top: 4px; line-height: 1.4; }
+  .tag { font-size: 10px; font-weight: 500; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; margin-top: 2px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; transition: all 0.2s; }
+  .tag.done { background: #1A1A1A !important; color: #444 !important; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="anim" style="animation-delay:0s; padding-top: 40px;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:6px;">
+      <div>
+        <div style="font-family:'DM Mono',monospace; font-size:11px; color:#666; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:8px;">Quarta-feira · 25 mar</div>
+        <h1 style="font-size:26px; font-weight:600; color:#F0EDE8;">Plano do dia</h1>
+      </div>
+      <div style="text-align:right;">
+        <div id="pct" style="font-size:28px; font-weight:600; color:#E8533A; font-family:'DM Mono',monospace;">0%</div>
+        <div id="counter" style="font-size:12px; color:#555; margin-top:2px;">0/5 tarefas</div>
+      </div>
+    </div>
+    <div style="height:3px; background:#1E1E1E; border-radius:2px; margin-top:20px; margin-bottom:8px; overflow:hidden;">
+      <div id="progress-bar" style="height:100%; background:#E8533A; border-radius:2px; width:0%; transition:width 0.4s ease;"></div>
+    </div>
+  </div>
+
+  <!-- Focus Card -->
+  <div class="anim" style="animation-delay:0.08s; margin-top:16px;">
+    <div style="background:#161616; border:0.5px solid #2A2A2A; border-left:2px solid #E8533A; border-radius:12px; padding:14px 18px;">
+      <div style="font-family:'DM Mono',monospace; font-size:10px; color:#E8533A; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:5px;">Foco principal</div>
+      <div style="font-size:14px; font-weight:500; color:#F0EDE8; line-height:1.4;">Finalizar criativos da Porte Investimentos — Trade Finance e Câmbio</div>
+    </div>
+  </div>
+
+  <!-- BLOCO MANHÃ -->
+  <div class="anim" style="animation-delay:0.14s; margin-top:24px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#E8533A; flex-shrink:0;"></div>
+      <span style="font-size:11px; font-weight:500; color:#666; text-transform:uppercase; letter-spacing:0.08em; flex:1;">Manhã — Alta Performance</span>
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#444;">até 12h</span>
+      <span id="count-manha" style="font-family:'DM Mono',monospace; font-size:11px; color:#555;">0/3</span>
+    </div>
+    <div style="background:#131313; border:0.5px solid #1E1E1E; border-radius:14px; overflow:hidden;">
+      <div class="task-row" data-id="t1a" data-block="manha" data-color="#E8533A" onclick="toggle(this)">
+        <div class="check-circle" style="--c:#E8533A"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Ajustar carteirinha CRBM da Dra Elys</div>
+          <div class="task-sub">Quick win — 20 min. Abre o dia com entrega concluída.</div>
+        </div>
+        <div class="tag" style="background:#E6F1FB; color:#185FA5;">cliente</div>
+      </div>
+      <div class="task-row" data-id="t1b" data-block="manha" data-color="#E8533A" onclick="toggle(this)">
+        <div class="check-circle"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Criar criativo Trade Finance — Porte Investimentos</div>
+        </div>
+        <div class="tag" style="background:#FCEBEB; color:#A32D2D;">receita</div>
+      </div>
+      <div class="task-row" data-id="t1c" data-block="manha" data-color="#E8533A" onclick="toggle(this)">
+        <div class="check-circle"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Criar criativo Câmbio — Porte Investimentos</div>
+        </div>
+        <div class="tag" style="background:#FCEBEB; color:#A32D2D;">receita</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO TARDE -->
+  <div class="anim" style="animation-delay:0.2s; margin-top:24px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#2B7FD4; flex-shrink:0;"></div>
+      <span style="font-size:11px; font-weight:500; color:#666; text-transform:uppercase; letter-spacing:0.08em; flex:1;">Tarde — Execução</span>
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#444;">13h–17h</span>
+      <span id="count-tarde" style="font-family:'DM Mono',monospace; font-size:11px; color:#555;">0/2</span>
+    </div>
+    <div style="background:#131313; border:0.5px solid #1E1E1E; border-radius:14px; overflow:hidden;">
+      <div class="task-row" data-id="t2a" data-block="tarde" data-color="#2B7FD4" onclick="toggle(this)">
+        <div class="check-circle"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Configurar campanha de crédito no FB Ads — Porte Investimentos</div>
+          <div class="task-sub">Estrutura da campanha + conjuntos de anúncios + subir criativos prontos.</div>
+        </div>
+        <div class="tag" style="background:#FCEBEB; color:#A32D2D;">receita</div>
+      </div>
+      <div class="task-row" data-id="t2b" data-block="tarde" data-color="#2B7FD4" onclick="toggle(this)">
+        <div class="check-circle"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Configurar Business Manager — Dra Elys</div>
+          <div class="task-sub">Deixar pronto para subir campanhas dela em seguida.</div>
+        </div>
+        <div class="tag" style="background:#E6F1FB; color:#185FA5;">cliente</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BLOCO FINAL DO DIA -->
+  <div class="anim" style="animation-delay:0.26s; margin-top:24px;">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+      <div style="width:8px; height:8px; border-radius:50%; background:#1A9E72; flex-shrink:0;"></div>
+      <span style="font-size:11px; font-weight:500; color:#666; text-transform:uppercase; letter-spacing:0.08em; flex:1;">Final do Dia — Leve</span>
+      <span style="font-family:'DM Mono',monospace; font-size:11px; color:#444;">17h–19h</span>
+      <span id="count-final" style="font-family:'DM Mono',monospace; font-size:11px; color:#555;">0/1</span>
+    </div>
+    <div style="background:#131313; border:0.5px solid #1E1E1E; border-radius:14px; overflow:hidden;">
+      <div class="task-row" data-id="t3a" data-block="final" data-color="#1A9E72" onclick="toggle(this)">
+        <div class="check-circle"><svg width="11" height="9" viewBox="0 0 11 9" fill="none"><path d="M1 4L4 7.5L10 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="flex:1; min-width:0;">
+          <div class="task-text">Estruturar perfil pessoal no Instagram</div>
+          <div class="task-sub">Bio, destaque, foto, link. Deixar 100% profissional antes de crescer.</div>
+        </div>
+        <div class="tag" style="background:#E1F5EE; color:#0F6E56;">marca</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mentoria -->
+  <div class="anim" style="animation-delay:0.32s; margin-top:16px;">
+    <div style="background:#131313; border:0.5px solid #1E1E1E; border-radius:14px; padding:14px 18px; display:flex; align-items:center; gap:14px;">
+      <div style="width:36px; height:36px; border-radius:50%; background:#1A1630; border:0.5px solid #3C3489; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="#7F77DD" stroke-width="1.3"/><path d="M8 4.5v4l2.5 1.5" stroke="#7F77DD" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <div style="font-size:14px; font-weight:500; color:#9590E0;">Mentoria — 20h00</div>
+        <div style="font-size:12px; color:#555; margin-top:2px;">Bloqueado. Pare tudo às 19h30.</div>
+      </div>
+      <div style="margin-left:auto; font-family:'DM Mono',monospace; font-size:11px; color:#3C3489; background:#0E0D1A; padding:4px 10px; border-radius:20px; border:0.5px solid #2A2560;">fixo</div>
+    </div>
+  </div>
+
+  <!-- Adiadas -->
+  <div class="anim" style="animation-delay:0.36s; margin-top:12px;">
+    <div style="background:#0E0E0E; border:0.5px solid #1A1A1A; border-radius:14px; padding:14px 18px;">
+      <div style="font-family:'DM Mono',monospace; font-size:10px; color:#444; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px;">Adiadas para amanhã</div>
+      <div style="font-size:13px; color:#3A3A3A; padding:4px 0;">— Editar vídeo Dra Elys</div>
+      <div style="font-size:13px; color:#3A3A3A; padding:4px 0;">— Montar criativos Dra Elys</div>
+    </div>
+  </div>
+
+  <!-- Completion -->
+  <div id="completion" style="display:none; margin-top:20px; background:#0D1F18; border:0.5px solid #1A9E72; border-radius:14px; padding:18px 20px; text-align:center;">
+    <div style="font-size:24px; margin-bottom:8px; color:#1A9E72;">✓</div>
+    <div style="font-size:15px; font-weight:500; color:#1A9E72;">Dia concluído.</div>
+    <div style="font-size:13px; color:#0F6E56; margin-top:4px;">Vai bem na mentoria hoje à noite.</div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 6;
+  const blockTotals = { manha: 3, tarde: 2, final: 1 };
+  const STORAGE_KEY = "plano-quarta-25-03";
+  let state = {};
+
+  function save() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(_) {} }
+  function load() { try { const d = localStorage.getItem(STORAGE_KEY); if (d) state = JSON.parse(d); } catch(_) {} }
+
+  function updateUI() {
+    const completed = Object.values(state).filter(Boolean).length;
+    const pct = Math.round((completed / TOTAL) * 100);
+    document.getElementById("pct").textContent = pct + "%";
+    document.getElementById("pct").style.color = pct === 100 ? "#1A9E72" : "#E8533A";
+    document.getElementById("counter").textContent = completed + "/" + TOTAL + " tarefas";
+    document.getElementById("progress-bar").style.width = pct + "%";
+    document.getElementById("progress-bar").style.background = pct === 100 ? "#1A9E72" : "#E8533A";
+    document.getElementById("completion").style.display = pct === 100 ? "block" : "none";
+
+    ["manha", "tarde", "final"].forEach(block => {
+      const rows = document.querySelectorAll('[data-block="' + block + '"]');
+      let done = 0;
+      rows.forEach(r => { if (state[r.dataset.id]) done++; });
+      const el = document.getElementById("count-" + block);
+      if (el) { el.textContent = done + "/" + blockTotals[block]; el.style.color = done === blockTotals[block] ? "#1A9E72" : "#555"; }
+    });
+  }
+
+  function toggle(row) {
+    const id = row.dataset.id;
+    const color = row.dataset.color;
+    state[id] = !state[id];
+    const isDone = state[id];
+    const circle = row.querySelector(".check-circle");
+    const text = row.querySelector(".task-text");
+    const sub = row.querySelector(".task-sub");
+    const tag = row.querySelector(".tag");
+    circle.classList.toggle("done", isDone);
+    circle.style.background = isDone ? color : "transparent";
+    circle.style.borderColor = isDone ? color : "#333";
+    text.classList.toggle("done", isDone);
+    if (sub) sub.style.display = isDone ? "none" : "block";
+    if (tag) tag.classList.toggle("done", isDone);
+    save();
+    updateUI();
+  }
+
+  load();
+  document.querySelectorAll(".task-row[data-id]").forEach(row => {
+    const id = row.dataset.id;
+    const color = row.dataset.color;
+    if (state[id]) {
+      const circle = row.querySelector(".check-circle");
+      const text = row.querySelector(".task-text");
+      const sub = row.querySelector(".task-sub");
+      const tag = row.querySelector(".tag");
+      circle.classList.add("done");
+      circle.style.background = color;
+      circle.style.borderColor = color;
+      text.classList.add("done");
+      if (sub) sub.style.display = "none";
+      if (tag) tag.classList.add("done");
+    }
+  });
+  updateUI();
+</script>
+</body>
+</html>
