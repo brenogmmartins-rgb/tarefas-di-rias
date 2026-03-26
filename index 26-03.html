@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Breno · Plano do Dia</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --bg:#0f1117;
+  --surface:#181c27;
+  --surface-hover:#1e2333;
+  --border:#252a3a;
+  --border-light:#2e3448;
+  --cyan:#3ecfcf;
+  --cyan-glow:#3ecfcf22;
+  --green:#3ecf8e;
+  --green-glow:#3ecf8e22;
+  --amber:#f0a050;
+  --amber-glow:#f0a05022;
+  --red:#f05060;
+  --red-glow:#f0506022;
+  --purple:#9a7cf8;
+  --purple-glow:#9a7cf822;
+  --text:#e8eaf2;
+  --text-secondary:#8891a8;
+  --text-dim:#4a5168;
+  --radius:14px;
+  --radius-sm:8px;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding:32px 16px 100px;
+  overflow-x:hidden;
+}
+
+/* ── BACKGROUND GRADIENT ── */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, #3ecfcf0d, transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, #9a7cf806, transparent);
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap{
+  max-width:600px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+
+/* ══ HEADER ══ */
+.header{
+  margin-bottom:28px;
+  animation:up .5s ease both;
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.greeting{
+  font-size:13px;
+  font-weight:500;
+  color:var(--text-secondary);
+  letter-spacing:.02em;
+}
+
+.greeting span{color:var(--cyan);}
+
+.date-pill{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--text-secondary);
+  background:var(--surface);
+  border:1px solid var(--border-light);
+  padding:5px 14px;
+  border-radius:99px;
+}
+
+.title-block{margin-bottom:20px;}
+
+h1{
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:-.03em;
+  line-height:1.1;
+  color:var(--text);
+}
+
+h1 em{
+  font-style:normal;
+  color:var(--cyan);
+}
+
+.subtitle{
+  font-size:13px;
+  color:var(--text-dim);
+  margin-top:4px;
+  font-family:'DM Mono',monospace;
+  letter-spacing:.01em;
+}
+
+/* ── PROGRESS CARD ── */
+.progress-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin-bottom:12px;
+  animation:up .5s .05s ease both;
+}
+
+.progress-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+
+.progress-label{
+  font-size:12px;
+  font-weight:500;
+  color:var(--text-secondary);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.progress-nums{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  color:var(--text-dim);
+}
+
+.progress-nums span{
+  color:var(--cyan);
+  font-weight:500;
+}
+
+.bar-bg{
+  height:4px;
+  background:var(--border-light);
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--cyan),var(--green));
+  border-radius:99px;
+  width:0%;
+  transition:width .8s cubic-bezier(.4,0,.2,1);
+}
+
+.progress-stats{
+  display:flex;
+  gap:16px;
+  margin-top:14px;
+}
+
+.stat{
+  flex:1;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  padding:10px 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.stat-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.stat-dot.cyan{background:var(--cyan);box-shadow:0 0 6px var(--cyan);}
+.stat-dot.green{background:var(--green);box-shadow:0 0 6px var(--green);}
+.stat-dot.amber{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+
+.stat-info{flex:1;}
+
+.stat-val{
+  font-family:'DM Mono',monospace;
+  font-size:18px;
+  font-weight:500;
+  color:var(--text);
+  line-height:1;
+  transition:all .4s;
+}
+
+.stat-name{
+  font-size:10px;
+  color:var(--text-dim);
+  margin-top:2px;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+/* ══ FOCO ══ */
+.foco-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin-bottom:12px;
+  animation:up .5s .1s ease both;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+  transition:border-color .25s;
+}
+
+.foco-card::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--cyan),var(--green));
+  border-radius:3px 0 0 3px;
+}
+
+.foco-card:hover{border-color:var(--border-light);}
+
+.foco-eyebrow{
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--cyan);
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.pulse-dot{
+  width:5px;height:5px;
+  background:var(--cyan);
+  border-radius:50%;
+  animation:pulse 2s ease infinite;
+  flex-shrink:0;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:.4;transform:scale(.8);}
+}
+
+.foco-text{
+  font-size:15px;
+  font-weight:600;
+  color:var(--text);
+  line-height:1.5;
+}
+
+/* ══ ALERTA ══ */
+.alerta-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px 20px;
+  margin-bottom:24px;
+  animation:up .5s .15s ease both;
+  position:relative;
+  overflow:hidden;
+}
+
+.alerta-card::before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:var(--red);
+  border-radius:3px 0 0 3px;
+}
+
+.alerta-eyebrow{
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--red);
+  margin-bottom:6px;
+}
+
+.alerta-text{
+  font-size:12px;
+  color:var(--text-secondary);
+  line-height:1.6;
+}
+
+.alerta-text strong{color:var(--text);font-weight:600;}
+
+/* ══ TIMER POMODORO ══ */
+.timer-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 22px;
+  margin-bottom:24px;
+  animation:up .5s .18s ease both;
+}
+
+.timer-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:12px;
+}
+
+.timer-label{
+  font-size:10px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--text-secondary);
+}
+
+.timer-mode-toggle{
+  display:flex;
+  gap:4px;
+}
+
+.mode-btn{
+  font-size:10px;
+  font-weight:500;
+  padding:3px 10px;
+  border-radius:99px;
+  border:1px solid var(--border-light);
+  background:transparent;
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+}
+
+.mode-btn.active{
+  background:var(--cyan-glow);
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+.timer-display{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.timer-ring{
+  position:relative;
+  width:72px;height:72px;
+  flex-shrink:0;
+}
+
+.timer-ring svg{
+  transform:rotate(-90deg);
+  width:72px;height:72px;
+}
+
+.ring-bg{stroke:var(--border-light);}
+.ring-fill{
+  stroke:var(--cyan);
+  stroke-dasharray:188;
+  stroke-dashoffset:188;
+  transition:stroke-dashoffset .5s linear, stroke .3s;
+}
+
+.timer-num{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'DM Mono',monospace;
+  font-size:15px;
+  font-weight:500;
+  color:var(--text);
+}
+
+.timer-controls{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.timer-task-label{
+  font-size:12px;
+  color:var(--text-secondary);
+  line-height:1.4;
+  font-weight:500;
+}
+
+.timer-task-label span{
+  color:var(--text);
+  font-weight:600;
+}
+
+.timer-btns{
+  display:flex;
+  gap:6px;
+}
+
+.timer-btn{
+  flex:1;
+  padding:8px;
+  border-radius:var(--radius-sm);
+  border:1px solid var(--border-light);
+  background:var(--bg);
+  color:var(--text);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s;
+  font-family:'DM Sans',sans-serif;
+  letter-spacing:.01em;
+}
+
+.timer-btn:hover{background:var(--surface-hover);border-color:var(--text-dim);}
+
+.timer-btn.start{
+  background:var(--cyan-glow);
+  border-color:var(--cyan);
+  color:var(--cyan);
+}
+
+.timer-btn.start:hover{background:#3ecfcf30;}
+
+.timer-btn.reset{color:var(--text-dim);}
+
+/* ══ SEÇÃO / BLOCO ══ */
+.section{
+  margin-bottom:20px;
+  animation:up .5s ease both;
+}
+
+.section:nth-child(1){animation-delay:.22s;}
+.section:nth-child(2){animation-delay:.29s;}
+.section:nth-child(3){animation-delay:.36s;}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+  padding:0 2px;
+}
+
+.section-icon{font-size:14px;}
+
+.section-title{
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--text-secondary);
+}
+
+.section-time{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--text-dim);
+  margin-left:auto;
+}
+
+.section-badge{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--cyan);
+  background:var(--cyan-glow);
+  border:1px solid #3ecfcf30;
+  padding:2px 8px;
+  border-radius:99px;
+}
+
+/* ══ TASK CARD ══ */
+.task{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:14px 16px;
+  margin-bottom:6px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
+  user-select:none;
+}
+
+.task:hover{
+  background:var(--surface-hover);
+  border-color:var(--border-light);
+  transform:translateY(-1px);
+  box-shadow:0 4px 20px #0008;
+}
+
+.task:active{transform:scale(.99);}
+
+/* accent stripe */
+.task::before{
+  content:'';
+  position:absolute;
+  left:0;top:12px;bottom:12px;
+  width:2px;
+  border-radius:2px;
+  transition:all .3s;
+}
+
+.task[data-tag="cliente"]::before{background:var(--purple);}
+.task[data-tag="receita"]::before{background:var(--cyan);}
+.task[data-tag="marca"]::before{background:var(--amber);}
+.task[data-tag="saude"]::before{background:var(--green);}
+.task[data-tag="casa"]::before{background:var(--red);}
+
+/* ripple */
+.task .ripple{
+  position:absolute;
+  border-radius:50%;
+  background:#ffffff10;
+  transform:scale(0);
+  animation:rippleAnim .5s linear;
+  pointer-events:none;
+}
+
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* done state */
+.task.done{
+  opacity:.45;
+  pointer-events:none;
+}
+
+.task.done .task-name{
+  text-decoration:line-through;
+  color:var(--text-dim);
+}
+
+/* checkbox */
+.cb{
+  width:20px;height:20px;
+  border-radius:6px;
+  border:1.5px solid var(--border-light);
+  flex-shrink:0;
+  margin-top:1px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  overflow:hidden;
+}
+
+.task.done .cb{
+  background:var(--green);
+  border-color:var(--green);
+  box-shadow:0 0 12px var(--green-glow);
+  animation:checkPop .35s cubic-bezier(.175,.885,.32,1.275) both;
+}
+
+@keyframes checkPop{
+  0%{transform:scale(.7);}
+  60%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
+
+.cb-icon{
+  display:none;
+  color:#0f1117;
+  font-weight:900;
+  font-size:11px;
+}
+
+.task.done .cb-icon{display:block;}
+
+.task-body{flex:1;min-width:0;}
+
+.task-name{
+  font-size:14px;
+  font-weight:600;
+  color:var(--text);
+  line-height:1.35;
+  margin-bottom:3px;
+}
+
+.task-desc{
+  font-size:11px;
+  color:var(--text-secondary);
+  line-height:1.5;
+}
+
+.task-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+  flex-shrink:0;
+}
+
+.tag{
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:99px;
+  border:1px solid;
+}
+
+.tag.cliente{color:var(--purple);background:var(--purple-glow);border-color:#9a7cf830;}
+.tag.receita{color:var(--cyan);background:var(--cyan-glow);border-color:#3ecfcf30;}
+.tag.marca{color:var(--amber);background:var(--amber-glow);border-color:#f0a05030;}
+.tag.saude{color:var(--green);background:var(--green-glow);border-color:#3ecf8e30;}
+.tag.casa{color:var(--red);background:var(--red-glow);border-color:#f0506030;}
+
+/* timer mini btn */
+.task-timer-btn{
+  font-size:9px;
+  font-weight:500;
+  color:var(--text-dim);
+  background:var(--bg);
+  border:1px solid var(--border);
+  padding:2px 8px;
+  border-radius:99px;
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+  pointer-events:all;
+}
+
+.task-timer-btn:hover{
+  color:var(--cyan);
+  border-color:var(--cyan);
+}
+
+/* ══ COMPLEMENTARES ══ */
+.comp-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  margin-top:4px;
+  animation:up .5s .42s ease both;
+}
+
+.comp-head{
+  font-size:10px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--text-dim);
+  margin-bottom:10px;
+}
+
+.comp-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  transition:opacity .2s;
+  user-select:none;
+}
+
+.comp-item:last-child{border-bottom:none;}
+.comp-item:hover{opacity:.75;}
+
+.comp-cb{
+  width:16px;height:16px;
+  border-radius:4px;
+  border:1.5px solid var(--border-light);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  transition:all .25s;
+}
+
+.comp-item.done .comp-cb{
+  background:var(--green);
+  border-color:var(--green);
+  box-shadow:0 0 8px var(--green-glow);
+  animation:checkPop .3s cubic-bezier(.175,.885,.32,1.275) both;
+}
+
+.comp-item.done .comp-cb::after{
+  content:'✓';
+  font-size:9px;
+  font-weight:900;
+  color:#0f1117;
+}
+
+.comp-name{
+  font-size:13px;
+  font-weight:500;
+  color:var(--text-secondary);
+}
+
+.comp-item.done .comp-name{
+  text-decoration:line-through;
+  color:var(--text-dim);
+}
+
+.comp-emoji{font-size:14px;margin-left:auto;}
+
+/* ══ CELEBRAÇÃO ══ */
+.celebration{
+  display:none;
+  text-align:center;
+  padding:48px 0 24px;
+  animation:up .6s ease both;
+}
+
+.celebration.show{display:block;}
+
+.cel-emoji{font-size:40px;margin-bottom:12px;}
+
+.cel-title{
+  font-size:22px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.02em;
+  margin-bottom:6px;
+}
+
+.cel-sub{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--text-dim);
+}
+
+/* ══ CONFETTI ══ */
+.confetti-wrap{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  overflow:hidden;
+}
+
+.confetti-piece{
+  position:absolute;
+  width:8px;height:8px;
+  border-radius:2px;
+  opacity:0;
+  animation:confettiFall 1.2s ease-in forwards;
+}
+
+@keyframes confettiFall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+
+/* ══ ANIMAÇÕES ══ */
+@keyframes up{
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:99px;}
+
+/* ══ TOAST ══ */
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:var(--surface);
+  border:1px solid var(--border-light);
+  border-radius:99px;
+  padding:10px 20px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+  box-shadow:0 8px 32px #000a;
+  z-index:998;
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+  white-space:nowrap;
+}
+
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* TIMER SOUND ICON */
+.timer-sound{
+  cursor:pointer;
+  color:var(--text-dim);
+  font-size:14px;
+  padding:4px;
+  border-radius:4px;
+  transition:color .2s;
+}
+.timer-sound:hover{color:var(--text);}
+</style>
+</head>
+<body>
+
+<div class="confetti-wrap" id="confetti"></div>
+<div class="toast" id="toast"></div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-row">
+      <div class="greeting">Bom dia, <span>Breno</span> 👋</div>
+      <div class="date-pill">Qui, 26 Mar 2025</div>
+    </div>
+    <div class="title-block">
+      <h1>Plano do <em>Dia</em></h1>
+      <p class="subtitle">// sistema de execução pessoal</p>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-card">
+      <div class="progress-top">
+        <span class="progress-label">Progresso</span>
+        <span class="progress-nums"><span id="done-num">0</span>/5 concluídas</span>
+      </div>
+      <div class="bar-bg"><div class="bar-fill" id="bar"></div></div>
+      <div class="progress-stats">
+        <div class="stat">
+          <div class="stat-dot cyan"></div>
+          <div class="stat-info">
+            <div class="stat-val" id="stat-pct">0%</div>
+            <div class="stat-name">do dia</div>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-dot green"></div>
+          <div class="stat-info">
+            <div class="stat-val" id="stat-done">0</div>
+            <div class="stat-name">feitas</div>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-dot amber"></div>
+          <div class="stat-info">
+            <div class="stat-val" id="stat-left">5</div>
+            <div class="stat-name">restantes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOCO -->
+  <div class="foco-card">
+    <div class="foco-eyebrow"><div class="pulse-dot"></div> Foco principal</div>
+    <div class="foco-text">Fechar tudo da Dra Elys — BM configurada, vídeo editado e carrossel postado.</div>
+  </div>
+
+  <!-- ALERTA -->
+  <div class="alerta-card">
+    <div class="alerta-eyebrow">⚠ Alerta</div>
+    <div class="alerta-text">
+      Você chegou com 8 itens na cabeça. <strong>Não abra Claude ou INNER AI antes das 17h</strong> — o teste fica reservado pro bloco de estudo.
+    </div>
+  </div>
+
+  <!-- TIMER POMODORO -->
+  <div class="timer-card">
+    <div class="timer-top">
+      <span class="timer-label">⏱ Pomodoro</span>
+      <div class="timer-mode-toggle">
+        <button class="mode-btn active" onclick="setMode(25,'foco')">25 min</button>
+        <button class="mode-btn" onclick="setMode(5,'pausa')">5 min</button>
+        <button class="mode-btn" onclick="setMode(15,'longa')">15 min</button>
+      </div>
+    </div>
+    <div class="timer-display">
+      <div class="timer-ring">
+        <svg viewBox="0 0 72 72">
+          <circle class="ring-bg" cx="36" cy="36" r="30" fill="none" stroke-width="3"/>
+          <circle class="ring-fill" id="ring" cx="36" cy="36" r="30" fill="none" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="timer-num" id="timer-display">25:00</div>
+      </div>
+      <div class="timer-controls">
+        <div class="timer-task-label">Tarefa: <span id="timer-task-name">nenhuma selecionada</span></div>
+        <div class="timer-btns">
+          <button class="timer-btn start" id="timer-btn" onclick="toggleTimer()">▶ Iniciar</button>
+          <button class="timer-btn reset" onclick="resetTimer()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANHÃ -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🌅</span>
+      <span class="section-title">Manhã — Alta Performance</span>
+      <span class="section-time">até 12h</span>
+      <span class="section-badge" id="b-manha">0/2</span>
+    </div>
+
+    <div class="task" data-tag="cliente" data-block="manha" data-name="Configurar BM da Dra Elys" onclick="toggleTask(this,event)">
+      <div class="cb"><span class="cb-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-name">Configurar BM da Dra Elys</div>
+        <div class="task-desc">Bloqueando as campanhas dela. Prioridade máxima.</div>
+      </div>
+      <div class="task-right">
+        <span class="tag cliente">cliente</span>
+        <span class="task-timer-btn" onclick="setTimerTask(this,event)">⏱ focar</span>
+      </div>
+    </div>
+
+    <div class="task" data-tag="cliente" data-block="manha" data-name="Editar vídeo da Dra Elys" onclick="toggleTask(this,event)">
+      <div class="cb"><span class="cb-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-name">Editar vídeo da Dra Elys</div>
+        <div class="task-desc">Adiado desde ontem. Feche antes do almoço.</div>
+      </div>
+      <div class="task-right">
+        <span class="tag cliente">cliente</span>
+        <span class="task-timer-btn" onclick="setTimerTask(this,event)">⏱ focar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARDE -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">☀️</span>
+      <span class="section-title">Tarde — Execução</span>
+      <span class="section-time">13h – 17h</span>
+      <span class="section-badge" id="b-tarde">0/2</span>
+    </div>
+
+    <div class="task" data-tag="cliente" data-block="tarde" data-name="Postar carrossel da Dra Elys" onclick="toggleTask(this,event)">
+      <div class="cb"><span class="cb-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-name">Postar carrossel da Dra Elys</div>
+        <div class="task-desc">Vídeo pronto, finalize a entrega dela de vez.</div>
+      </div>
+      <div class="task-right">
+        <span class="tag cliente">cliente</span>
+        <span class="task-timer-btn" onclick="setTimerTask(this,event)">⏱ focar</span>
+      </div>
+    </div>
+
+    <div class="task" data-tag="receita" data-block="tarde" data-name="Postagem + revisão — Porte Investimentos" onclick="toggleTask(this,event)">
+      <div class="cb"><span class="cb-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-name">Postagem + Revisão de Campanha — Porte</div>
+        <div class="task-desc">Um bloco só: posta e já revisa a campanha em seguida.</div>
+      </div>
+      <div class="task-right">
+        <span class="tag receita">receita</span>
+        <span class="task-timer-btn" onclick="setTimerTask(this,event)">⏱ focar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="section">
+    <div class="section-head">
+      <span class="section-icon">🌙</span>
+      <span class="section-title">Final — Leve</span>
+      <span class="section-time">17h – 19h</span>
+      <span class="section-badge" id="b-final">0/1</span>
+    </div>
+
+    <div class="task" data-tag="marca" data-block="final" data-name="Estudar marca pessoal" onclick="toggleTask(this,event)">
+      <div class="cb"><span class="cb-icon">✓</span></div>
+      <div class="task-body">
+        <div class="task-name">Estudar marca pessoal</div>
+        <div class="task-desc">Testar Claude + INNER AI como ferramentas. Mata três coelhos.</div>
+      </div>
+      <div class="task-right">
+        <span class="tag marca">marca</span>
+        <span class="task-timer-btn" onclick="setTimerTask(this,event)">⏱ focar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLEMENTARES -->
+  <div class="comp-card">
+    <div class="comp-head">Complementares</div>
+
+    <div class="comp-item" onclick="toggleComp(this)">
+      <div class="comp-cb"></div>
+      <span class="comp-name">Pedalar 40 minutos</span>
+      <span class="comp-emoji">🚴</span>
+    </div>
+
+    <div class="comp-item" onclick="toggleComp(this)">
+      <div class="comp-cb"></div>
+      <span class="comp-name">Limpeza do banheiro</span>
+      <span class="comp-emoji">🧹</span>
+    </div>
+  </div>
+
+  <!-- CELEBRAÇÃO -->
+  <div class="celebration" id="celebration">
+    <div class="cel-emoji">🏆</div>
+    <div class="cel-title">Dia concluído.</div>
+    <div class="cel-sub">// 5/5 · execução confirmada · bom trabalho, Breno</div>
+  </div>
+
+</div>
+
+<script>
+/* ── STATE ── */
+const TOTAL = 5;
+let timerInterval = null;
+let timerRunning  = false;
+let timerSeconds  = 25 * 60;
+let timerTotal    = 25 * 60;
+let timerMode     = 'foco';
+
+/* ── PROGRESS ── */
+function updateProgress(){
+  const done = document.querySelectorAll('.task.done').length;
+  const pct  = Math.round(done / TOTAL * 100);
+
+  document.getElementById('bar').style.width       = pct + '%';
+  document.getElementById('stat-pct').textContent  = pct + '%';
+  document.getElementById('done-num').textContent  = done;
+  document.getElementById('stat-done').textContent = done;
+  document.getElementById('stat-left').textContent = TOTAL - done;
+
+  ['manha','tarde','final'].forEach(b => {
+    const all  = document.querySelectorAll(`.task[data-block="${b}"]`).length;
+    const d    = document.querySelectorAll(`.task[data-block="${b}"].done`).length;
+    const el   = document.getElementById(`b-${b}`);
+    if(el) el.textContent = `${d}/${all}`;
+  });
+
+  if(done >= TOTAL){
+    document.getElementById('celebration').classList.add('show');
+    launchConfetti();
+  }
+}
+
+/* ── TOGGLE TASK ── */
+function toggleTask(card, e){
+  // don't trigger if clicking timer btn
+  if(e.target.classList.contains('task-timer-btn')) return;
+
+  // ripple
+  const r = document.createElement('span');
+  r.classList.add('ripple');
+  const rect = card.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height) * 2;
+  r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px;`;
+  card.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+
+  const wasDone = card.classList.contains('done');
+  card.classList.toggle('done');
+
+  if(!wasDone){
+    showToast('✓ Tarefa concluída!');
+  }
+
+  setTimeout(updateProgress, 50);
+}
+
+/* ── TOGGLE COMP ── */
+function toggleComp(item){
+  item.classList.toggle('done');
+  if(item.classList.contains('done')) showToast('✓ ' + item.querySelector('.comp-name').textContent);
+}
+
+/* ── TOAST ── */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+/* ── CONFETTI ── */
+function launchConfetti(){
+  const wrap  = document.getElementById('confetti');
+  const colors= ['#3ecfcf','#3ecf8e','#9a7cf8','#f0a050','#f05060','#fff'];
+  wrap.innerHTML = '';
+  for(let i=0;i<60;i++){
+    const el = document.createElement('div');
+    el.classList.add('confetti-piece');
+    el.style.left        = Math.random()*100 + 'vw';
+    el.style.top         = '-20px';
+    el.style.background  = colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDelay  = Math.random() * .8 + 's';
+    el.style.animationDuration = (.8 + Math.random()*.8) + 's';
+    el.style.borderRadius = Math.random() > .5 ? '50%' : '2px';
+    wrap.appendChild(el);
+  }
+  setTimeout(() => wrap.innerHTML='', 3000);
+}
+
+/* ── TIMER ── */
+function setMode(min, mode){
+  resetTimer();
+  timerMode    = mode;
+  timerSeconds = min * 60;
+  timerTotal   = min * 60;
+  updateTimerDisplay();
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const ring = document.getElementById('ring');
+  ring.style.stroke = mode==='foco' ? 'var(--cyan)' : mode==='pausa' ? 'var(--green)' : 'var(--amber)';
+}
+
+function setTimerTask(btn, e){
+  e.stopPropagation();
+  const card = btn.closest('.task');
+  const name = card.dataset.name;
+  document.getElementById('timer-task-name').textContent = name;
+  showToast('⏱ Tarefa selecionada no timer');
+  // scroll to timer
+  document.querySelector('.timer-card').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function toggleTimer(){
+  if(timerRunning){
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-btn').textContent = '▶ Iniciar';
+  } else {
+    timerRunning = true;
+    document.getElementById('timer-btn').textContent = '⏸ Pausar';
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      if(timerSeconds <= 0){
+        clearInterval(timerInterval);
+        timerRunning = false;
+        timerSeconds = 0;
+        document.getElementById('timer-btn').textContent = '▶ Iniciar';
+        showToast('🎉 Tempo finalizado! Ótimo trabalho.');
+        updateTimerDisplay();
+        return;
+      }
+      updateTimerDisplay();
+    }, 1000);
+  }
+}
+
+function resetTimer(){
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = timerTotal;
+  document.getElementById('timer-btn').textContent = '▶ Iniciar';
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay(){
+  const m = String(Math.floor(timerSeconds/60)).padStart(2,'0');
+  const s = String(timerSeconds%60).padStart(2,'0');
+  document.getElementById('timer-display').textContent = `${m}:${s}`;
+
+  const pct    = timerSeconds / timerTotal;
+  const circum = 188;
+  document.getElementById('ring').style.strokeDashoffset = circum * pct;
+}
+
+updateProgress();
+updateTimerDisplay();
+</script>
+</body>
+</html>
